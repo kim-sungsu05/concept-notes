@@ -1,42 +1,234 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Document</title>
+
     <link rel="stylesheet" href="main.css">
 </head>
+
 <body>
+
+    <!-- ================================
+         기본 HTML
+    ================================= -->
+
     <h2 id="hello">안녕하세요</h2>
 
-     <!-- 웹에 존재하는 UI 종료 : 모달, Alert, 탭, 툴팁, 서브메뉴, 경고문, 캐러셀 등등 -->
-     <!-- UI만들 때는 미리 디자인해놓고 숨기겨서 버튼 누르거나 할 때 보여준다 -->
-     <!-- Alert -->
 
+    <!-- ================================
+         UI 만들기
+         - 미리 HTML/CSS로 디자인
+         - 평소에는 숨겨두기
+         - 버튼을 누르면 보여주기
+
+         예시:
+         모달, Alert, 탭, 툴팁, 서브메뉴,
+         경고문, 캐러셀 등
+    ================================= -->
+
+    <!-- Alert -->
     <div class="alert-box" id="alert">
         <p>Alert box</p>
 
-        <!-- 긴 코드를 함수로 축약해서 사용해서 사용할 수 있다 -->
-        <button onclick="document.getElementById('alert').style.display = 'none'">닫기</button>
-    </div> 
-    <!-- 모든 HTML 태그에는 onclick 속성을 부여할 수 있는데, 이는 해당 요소를 클릭했을 시 안에 있는 자바스크립트 명령어를 실행하라는 의미이다 -->
+        <!--
+            함수 없이 직접 작성하면 길어지는 코드
+
+            <button
+                onclick="document.getElementById('alert').style.display = 'none'"
+            >
+                닫기
+            </button>
+        -->
+
+        <!--
+            EventListener 사용
+            → HTML에 onclick을 직접 적지 않고
+               JavaScript에서 이벤트를 처리할 수 있다.
+        -->
+        <button id="close">닫기</button>
+    </div>
+
+
+    <!--
+        모든 HTML 태그에는 onclick 속성을 부여할 수 있다.
+
+        → 해당 요소를 클릭했을 때
+          안에 있는 JavaScript 명령어를 실행한다.
+    -->
     <button onclick="func_test('block')">열기</button>
 
-    <!-- 자바스크립트로 html 조작하는 방법 -->
+
+
+    <!-- ================================
+         jQuery
+    ================================= -->
+
+    <!--
+        JavaScript 라이브러리
+
+        jQuery와 React는
+        JavaScript 코드를 좀 더 간결하게 쓸 수 있게 도와준다.
+
+        React가 jQuery보다
+        - HTML 조작
+        - 스무스한 동작
+        - HTML 재활용
+
+        등이 편하다는 장점이 있어서 더 많이 사용된다.
+
+        하지만 jQuery로 개발된 사이트도 많다.
+
+        사용 방법:
+        1. jQuery 파일을 다운받는다.
+        2. <script>의 src 속성에 파일 경로를 넣는다.
+
+        또는
+
+        jQuery CDN을 검색해서
+        원하는 버전의 링크를 가져와 사용할 수도 있다.
+
+        아래 코드는 CDN을 사용한 예시.
+
+        head / body 어디든 사용할 수 있지만,
+        head에 넣으면 HTML을 읽는 도중
+        jQuery 파일을 가져오느라 로딩이 지연될 수 있다.
+
+        따라서 보통 body 쪽에 두는 것이 좋다.
+    -->
+    <script
+        src="https://code.jquery.com/jquery-4.0.0.slim.js"
+        integrity="sha256-M+GjhMBfXikM1izMplICCTscIj5hzPCp6uDzaypxtgg="
+        crossorigin="anonymous">
+    </script>
+
+
+    <!-- jQuery로 조작할 HTML -->
+    <h4 id="test">안녕하세요</h4>
+
+
+
+    <!-- ================================
+         JavaScript
+    ================================= -->
+
     <script>
-        
-        // 문서에서 'hello' id를 갖는 요소를 가져와 내부 글자를 '안녕' 으로 바꾼다
+
+        // =================================
+        // 1. jQuery로 HTML 조작하기
+        // =================================
+
+        /*
+            $('#test')
+            → document.getElementById('test')와 비슷하게
+              특정 HTML 요소를 가져온다.
+
+            .html('안녕')
+            → .innerHTML = '안녕'
+
+            .css()
+            → 스타일 속성 변경
+            예: .css('color', 'red')
+
+            .attr()
+            → HTML 속성 변경
+            예: .attr('src', 'test.jpg')
+        */
+
+        $('#test').html('하이');
+
+
+        // =================================
+        // 2. JavaScript로 HTML 요소 가져오기
+        // =================================
+
+        /*
+            querySelector()
+
+            CSS 선택자 방식으로 HTML 요소를 가져올 수 있다.
+        */
+
+        document.querySelector('#test');
+
+
+
+        // =================================
+        // 3. EventListener
+        // =================================
+
+        /*
+            "close가 click 되면
+             아래 함수를 실행해주세요."
+
+            이런 느낌으로 이해하면 된다.
+
+            이벤트 종류 예시:
+            - mouseover : 마우스를 올렸을 때
+            - click     : 클릭했을 때
+            - scroll    : 스크롤했을 때
+        */
+
+        document
+            .getElementById('close')
+            .addEventListener('click', function () {
+
+                document.getElementById('alert').style.display = 'none';
+
+            });
+
+
+
+        // =================================
+        // 4. HTML 내용 변경
+        // =================================
+
+        /*
+            문서에서 'hello'라는 id를 가진 요소를 가져와
+            내부 글자를 '안녕'으로 변경한다.
+        */
+
         document.getElementById('hello').innerHTML = '안녕';
-        // document.getElementById('???').??? = ???;  -> ???에 바꿀 요소를 대입한다
+
+
+        /*
+            기본 형태
+
+            document.getElementById('???').??? = ???;
+
+            → ??? 자리에
+              바꾸고 싶은 요소 / 속성 / 값을 넣는다.
+        */
+
+
+
+        // =================================
+        // 5. CSS 변경
+        // =================================
 
         document.getElementById('hello').style.fontSize = '30px';
-        
-        // 함수 문법
-        function func_test(arg){
-            document.getElementById('alert').style.display = arg;
-        } 
 
-        
+
+
+        // =================================
+        // 6. 함수
+        // =================================
+
+        /*
+            함수는 긴 코드를 하나로 묶어
+            필요할 때 다시 사용할 수 있게 해준다.
+        */
+
+        function func_test(arg) {
+
+            document.getElementById('alert').style.display = arg;
+
+        }
+
     </script>
+
 </body>
+
 </html>
